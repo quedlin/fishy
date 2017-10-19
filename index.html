@@ -9,8 +9,15 @@
     <script src="src/Preloader.js"></script>
     <script src="src/MainMenu.js"></script>
     <script src="src/Game.js"></script>-->
+    <style>
+
+      body { background-color: #000; }
+      canvas {   display : block;   margin : auto;}
+
+    </style>
 </head>
 <body>
+
 <script>
 (function() {
 
@@ -20,18 +27,25 @@
 	function preload() {
 
 		game.load.spritesheet('button', 'assets/buttons/button_sprite_sheet.png', 193, 71);
-		game.load.image('background','assets/misc/starfield.jpg');
+		game.load.image('background','assets/background.png');
+    game.load.image('background_radial','assets/background_radial.png');
+
 
 	}
 
 	var button;
 	var background;
+  var background_radial;
+  var background_state;
 
 	function create() {
 
 		game.stage.backgroundColor = '#182d3b';
 
 		background = game.add.tileSprite(0, 0, 800, 600, 'background');
+    background_radial = game.add.tileSprite(0, 0, 800, 600, 'background_radial');
+    background_radial.visible = false;
+    background_state = 0;
 
 		button = game.add.button(game.world.centerX - 95, 400, 'button', actionOnClick, this, 2, 1, 0);
 
@@ -55,7 +69,17 @@
 
 	function actionOnClick () {
 
-		background.visible =! background.visible;
+    if (background_state == 0)
+    {
+  		background.visible = false;
+      background_radial.visible = true;
+      background_state = 1;
+    } else if (background_state == 1)
+    {
+  		background.visible = true;
+      background_radial.visible = false;
+      background_state = 0;
+    }
 
 	}
 
@@ -63,5 +87,6 @@
 
 })();
 </script>
+
 </body>
 </html>
